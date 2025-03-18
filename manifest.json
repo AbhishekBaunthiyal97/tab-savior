@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "TabSavior",
+  "description": "Save and organize your browser tabs efficiently",
+  "version": "1.0",
+  "permissions": [
+    "tabs",
+    "storage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; img-src 'self' https://www.google.com https://*; style-src 'self' https://fonts.googleapis.com"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html",
+  "web_accessible_resources": [{
+    "resources": ["js/Sortable.min.js", "images/*"],
+    "matches": ["<all_urls>"]
+  }]
+} 
