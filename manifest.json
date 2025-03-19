@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "TabSavior",
-  "description": "Save and organize your browser tabs efficiently",
+  "name": "TabSavior: Save Tabs & Logins",
+  "short_name": "TabSavior",
+  "description": "Save & restore tabs effortlessly with TabSavior! Keep logins & groups intact—perfect for work, study, or multitasking. Boost productivity now!",
   "version": "1.0",
   "permissions": [
     "tabs",
@@ -17,7 +18,21 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "images/logo.png"
+    "default_icon": {
+      "16": "images/original.png",
+      "32": "images/original.png",
+      "48": "images/original.png",
+      "128": "images/original.png"
+    }
+  },
+  "icons": {
+    "16": "images/original.png",
+    "32": "images/original.png",
+    "48": "images/original.png",
+    "128": "images/original.png",
+    "192": "images/original.png",
+    "256": "images/original.png",
+    "512": "images/original.png"
   },
   "background": {
     "service_worker": "background.js"
