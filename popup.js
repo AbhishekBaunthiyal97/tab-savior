@@ -67,10 +67,17 @@ document.addEventListener('DOMContentLoaded', () => {
     savedSessionsList.innerHTML = ''; // Clear the list
     
     chrome.storage.sync.get(null, (items) => {
-        // Filter out items that are not sessions (like settings)
-        const sessions = Object.entries(items).filter(([key, value]) => 
-            value && typeof value === 'object' && value.tabs && Array.isArray(value.tabs)
-        );
+        // Filter out items that are not sessions and convert to array
+        const sessions = Object.entries(items)
+            .filter(([key, value]) => 
+                value && typeof value === 'object' && value.tabs && Array.isArray(value.tabs)
+            )
+            // Sort by dateTime in descending order (newest first)
+            .sort(([, a], [, b]) => {
+                const dateA = new Date(a.dateTime);
+                const dateB = new Date(b.dateTime);
+                return dateB - dateA;
+            });
         
         if (sessions.length === 0) {
             // Display a message when no sessions are saved
@@ -87,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display each session
         sessions.forEach(([name, session]) => {
             displaySession(savedSessionsList, name, session);
+        });
     });
-  });
   }
 
   // Search functionality - only for saved sessions page
