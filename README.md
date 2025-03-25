@@ -2,8 +2,6 @@
 
 Ever drowned in a sea of open tabs? Lost track of your work sessions or had to re-login to everything? Say hello to **Tab Savior**—the Chrome extension that rescues your productivity! Save and restore groups of browser tabs with their login states intact, so you can pick up right where you left off. Whether you're a developer juggling projects, a researcher tracking sources, or a multitasker managing web apps, Tab Savior's got your back.
 
-License: MIT
-
 ---
 
 ## 🌟 Features That Shine
@@ -11,15 +9,15 @@ License: MIT
 Here's why Tab Savior is a game-changer:
 
 * **Save Multiple Tab Groups with URLs and Cookies**  
-Capture your entire workspace—tabs, URLs, and even login cookies—in one click.
+  Capture your entire workspace—tabs, URLs, and even login cookies—in one click.
 * **Restore Tabs with Login States Intact**  
-Jump back into your sessions without the hassle of re-logging in.
+  Jump back into your sessions without the hassle of re-logging in.
 * **Intuitive Popup Interface**  
-Manage your tab groups (save, restore, delete, update) with ease.
+  Manage your tab groups (save, restore, delete, update) with ease.
 * **Auto-Restore on Startup**  
-Set a default group to load automatically—your tabs, ready when you are!
+  Set a default group to load automatically—your tabs, ready when you are!
 * **Secure HttpOnly Cookie Support**  
-Uses Chrome's debugger API to preserve even the trickiest cookies safely.
+  Uses Chrome's debugger API to preserve even the trickiest cookies safely.
 
 ---
 
