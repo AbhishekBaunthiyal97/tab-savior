@@ -1,7 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+import Analytics from './analytics.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
   let isSaving = false;
   let activeFilters = new Set();
   let currentView = 'current'; // 'current' or 'saved'
+
+  // Initialize analytics
+  await Analytics.trackOpen();
+  const startTime = Date.now();
+
+  // Track usage duration when popup closes
+  window.addEventListener('unload', async () => {
+    const duration = (Date.now() - startTime) / 1000; // Convert to seconds
+    await Analytics.trackUsageDuration(duration);
+  });
 
   // Initialize notification system first
   function showNotification(message, type = 'info') {
@@ -139,16 +151,33 @@ document.addEventListener('DOMContentLoaded', () => {
         ? session.tags.map(tag => `<span class="tag-pill">• ${tag}</span>`).join(' ') 
         : '';
 
-    // Format time to "10:04 PM" style
-    const date = new Date(session.dateTime); // Use the existing dateTime property
-    const formattedTime = date.toLocaleString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric'
-    });
+    // Format time using a standardized approach
+    let formattedTime;
+    try {
+        // First try to parse the date if it's a string
+        const date = typeof session.dateTime === 'string' 
+            ? new Date(session.dateTime.replace(/,/g, '')) 
+            : new Date(session.dateTime);
+            
+        // Check if the date is valid
+        if (isNaN(date.getTime())) {
+            throw new Error('Invalid date');
+        }
+        
+        // Format using a consistent approach
+        formattedTime = date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'UTC' // Use UTC to avoid timezone issues
+        });
+    } catch (error) {
+        console.error('Error formatting date:', error);
+        formattedTime = 'Date unavailable';
+    }
 
     li.innerHTML = `
         <div class="session-header">
@@ -346,6 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Edit button functionality
     const editBtn = li.querySelector('.edit-btn');
     editBtn.addEventListener('click', () => {
+        Analytics.trackSessionAction('edit');
         editModal.classList.remove('hidden');
         moreOptionsMenu.classList.add('hidden');
     });
@@ -437,12 +467,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const cancelBtn = manageWebsitesModal.querySelector('.cancel-websites-btn');
             cancelBtn.addEventListener('click', () => {
                 manageWebsitesModal.classList.add('hidden');
+                moreOptionsMenu.classList.add('hidden'); // Hide the more options menu
             });
             
             // Handle close button
             const closeBtn = manageWebsitesModal.querySelector('.close-modal-btn');
             closeBtn.addEventListener('click', () => {
                 manageWebsitesModal.classList.add('hidden');
+                moreOptionsMenu.classList.add('hidden'); // Hide the more options menu
             });
         });
     }
@@ -453,6 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (restoreBtn) {
         restoreBtn.addEventListener('click', () => {
+            Analytics.trackSessionRestore(session.tabs.length);
             console.log('Restore button clicked for session:', name);
             // Get the URLs from the saved session
             const urls = session.tabs;
@@ -484,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (deleteBtn) {
+        Analytics.trackSessionAction('delete');
         deleteBtn.addEventListener('click', () => {
             console.log('Delete button clicked for session:', name);
             // Confirm before deleting
@@ -777,28 +811,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Add this function to handle saving tabs
-  function saveCurrentTabs() {
-    const groupName = document.getElementById('groupName').value.trim();
-    const groupTags = document.getElementById('groupTags').value.trim();
-    const groupNotes = document.getElementById('groupNotes').value.trim();
+  // Update save function
+  async function saveCurrentTabs() {
+    try {
+        const groupName = document.getElementById('groupName').value.trim();
+        const groupTags = document.getElementById('groupTags').value.trim();
+        const groupNotes = document.getElementById('groupNotes').value.trim();
 
-    // Check if session name is provided (mandatory)
-    if (!groupName) {
-        alert('Please enter a session name');
+        if (!groupName) {
+            alert('Please enter a session name');
             return;
         }
 
-    // Get all current tabs
-    chrome.tabs.query({ currentWindow: true }, (tabs) => {
+        const tabs = await chrome.tabs.query({ currentWindow: true });
         const tabUrls = tabs.map(tab => tab.url);
         
-        // Create session object
+        // Track session save
+        await Analytics.trackSessionSave(tabUrls.length);
+        
+        // Create session object with standardized date format
         const session = {
             name: groupName,
             tags: groupTags ? groupTags.split(',').map(tag => tag.trim()) : [],
             notes: groupNotes,
-            dateTime: new Date().toLocaleString(),
+            dateTime: new Date().toISOString(), // Store as ISO string for consistency
             tabs: tabUrls
         };
 
@@ -832,7 +868,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Tabs saved successfully!');
             }
       });
-    });
+    } catch (error) {
+        console.error('Error saving tabs:', error);
+        await Analytics.trackError('save_error', error.message);
+    }
   }
 
   // Attach event listeners for import/export buttons
