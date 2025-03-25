@@ -1,101 +1,103 @@
-# 🚀 Tab Savior: Your Ultimate Tab Management Companion 🚀
+# TabSavior: Tab Session Manager with Login State Preservation
 
-Ever felt overwhelmed with dozens of browser tabs? ✨ **Tab Savior** is here to rescue your productivity! Save and restore groups of tabs with their login states intact, and pick up exactly where you left off.
+**TabSavior** is the ultimate Chrome extension for professionals and power users who need to save, organize, and restore browser tab sessions while preserving all login states. No more lost work, forgotten research, or constant re-logins!
 
-![Tab Savior Banner](https://img.shields.io/badge/Tab%20Savior-Manage%20Your%20Tabs-blue)
+Are you tired of:
+- Losing dozens of important tabs when Chrome crashes?
+- Having to log back into all your accounts after restoring tabs?
+- Juggling multiple projects that each require different sets of tabs?
 
-## ✨ What Makes Tab Savior Special
+**TabSavior solves all these problems** with an elegant, user-friendly interface that makes tab management effortless.
 
-Tab Savior is the perfect solution for:
-- 👩‍💻 **Developers** juggling multiple projects
-- 🔍 **Researchers** tracking multiple sources
-- 🌐 **Multitaskers** managing various web applications
-- 🧠 Anyone who values organized browsing
+## Key Features
 
-## 🎯 Key Features
+- **Complete Session Preservation** - Save multiple tab groups with all their URLs and cookies
+- **Login State Retention** - Restore tab groups with all login sessions intact (even HttpOnly cookies!)
+- **Smart Organization** - Tag, search, and categorize your saved sessions
+- **One-Click Restoration** - Instantly bring back your entire workflow exactly as you left it
+- **Import/Export Capability** - Backup and transfer your saved sessions across devices
+- **Clean, Intuitive UI** - Manage everything through a beautiful, responsive interface
+- **Privacy Focused** - All data stored locally, no external servers involved
 
-- 📋 **Smart Tab Groups** - Save multiple tab collections with URLs and cookies
-- 🔐 **Login State Preservation** - No more tedious re-logging into your accounts
-- 🧙‍♂️ **One-Click Restoration** - Resume your work exactly where you left off
-- 🔄 **Auto-Restore on Startup** - Configure your browser to load your favorite tabs automatically
-- 🛡️ **HttpOnly Cookie Support** - Securely preserves all cookies using Chrome's debugger API
+## Installation
 
-## 📱 User-Friendly Interface
+### From Chrome Web Store (Recommended)
+1. Visit the [TabSavior Chrome Web Store page](https://chrome.google.com/webstore/detail/tabsavior/YOUR_EXTENSION_ID)
+2. Click "Add to Chrome"
+3. Confirm the installation when prompted
 
-- **Clean, Intuitive Design** - Easy to navigate even for non-technical users
-- **Quick Access Controls** - Save, restore, update, or delete tab groups in seconds
-- **Visual Management** - Clearly organized tab groups for maximum productivity
+### Manual Installation (For Developers)
+1. Download the latest release ZIP file from the [Releases page](https://github.com/YOUR_USERNAME/tabsavior/releases)
+2. Extract the ZIP file to a folder on your computer
+3. Open Chrome and navigate to `chrome://extensions/`
+4. Enable "Developer mode" in the top right
+5. Click "Load unpacked" and select the extracted extension directory
 
-## 🛠️ Installation
+## Usage
 
-Getting started with Tab Savior is a breeze:
+1. Click the extension icon in your Chrome toolbar
+2. To save current tabs:
+   - Enter a name for your tab group
+   - Add optional tags and notes
+   - Click "Save My Tabs"
+3. To restore tabs:
+   - Click "Saved Sessions" in the navigation
+   - Find your saved group
+   - Click "Restore"
+4. To manage groups:
+   - Use the search feature to find specific sessions
+   - Use the delete button to remove unwanted sessions
+   - Export/import sessions using the buttons in the header
 
-1. 📥 Clone this repository:
-   ```
-   git clone https://github.com/AbhishekBaunthiyal97/tab-savior.git
-   ```
-2. 🧩 Open Chrome and navigate to: `chrome://extensions/`
-3. 🔧 Enable **Developer mode** (toggle in top right)
-4. 📦 Click **Load unpacked** and select the Tab Savior folder
-5. 🎉 You're all set!
+## Security & Privacy
 
-💡 **Pro Tip:** Keep Chrome updated for the best experience!
+- All data is stored locally in your browser using Chrome's storage APIs
+- No data is sent to external servers
+- TabSavior requires permissions to access tabs and cookies to function properly
+- The debugger permission is used solely for capturing HttpOnly cookies to preserve login states
 
-## 📖 How to Use Tab Savior
+## Support
 
-### Saving Your Tabs
+If you encounter any issues or have questions, please:
+1. Check the [FAQ section](https://github.com/YOUR_USERNAME/tabsavior/wiki/FAQ)
+2. Submit an issue on our [GitHub Issues page](https://github.com/YOUR_USERNAME/tabsavior/issues)
 
-1. 📌 Click the Tab Savior icon in your Chrome toolbar
-2. 💾 Select "Save Current Tabs"
-3. ✏️ Name your group (e.g., "Work Project", "Research", "Shopping")
-4. ✅ Click "Save" and you're done!
+## License
 
-### Restoring Sessions
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-1. 📌 Click the Tab Savior icon
-2. 📋 Select a saved tab group from your list
-3. 🔄 Click "Restore" and watch your tabs reappear
-4. 🎯 All your tabs open with login states preserved!
+## Contributing
 
-### Setting Up Auto-Restore
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-1. ⚙️ Open the options page
-2. 📋 Select your default tab group
-3. 🔄 Configure auto-restore settings
-4. 🏁 Chrome will automatically restore your selected tabs on startup
+## Development Setup
 
-## 🔒 Privacy & Security
+1. Clone the repository
+```bash
+git clone https://github.com/YOUR_USERNAME/tabsavior.git
+cd tabsavior
+```
 
-Your data's security is our priority:
+2. Configure analytics (optional)
+- Copy `config.example.js` to `config.js`
+- Update the configuration values in `config.js`:
+  ```javascript
+  export const config = {
+      GA_MEASUREMENT_ID: 'YOUR_MEASUREMENT_ID',
+      GA_API_SECRET: 'YOUR_API_SECRET',
+      DEBUG_MODE: false
+  };
+  ```
 
-- 💻 **All Data Stays Local** - No external servers or cloud storage
-- 🔐 **Secure Implementation** - Uses Chrome's official APIs for cookie handling
-- 🛡️ **HttpOnly Cookie Support** - Even the most secure cookies are preserved properly
+3. Load the extension in Chrome
+- Open Chrome and navigate to `chrome://extensions/`
+- Enable "Developer mode"
+- Click "Load unpacked" and select the extension directory
 
-## 👩‍💻 For Developers
+## Security Notes
 
-Want to contribute to Tab Savior?
-
-1. 🍴 Fork the repository
-2. 💻 Make your improvements
-3. 📤 Submit a pull request
-
-**Tech Stack:** JavaScript, Chrome Extension APIs (tabs, storage, debugger)
-
-## 🌟 Why Users Love Tab Savior
-
-> "Tab Savior is a lifesaver! I can switch between client projects without losing my place or having to log in again." — Web Developer
-
-> "As a researcher, I often have 50+ tabs open. Tab Savior helps me organize them by project and restore them exactly when needed." — Academic Researcher
-
-## 📄 License
-
-Tab Savior is available under the MIT License — free and open for everyone!
-
----
-
-## 🔗 Ready to Tame Your Tabs?
-
-[![Download Tab Savior](https://img.shields.io/badge/Download-Tab%20Savior-green)](https://github.com/AbhishekBaunthiyal97/tab-savior)
-
-Made with ❤️ for tab power-users everywhere
+- Never commit `config.js` to version control
+- Keep your API keys and secrets private
+- The extension uses Google Analytics for anonymous usage tracking
+- No personal data is collected or transmitted
+- All data is stored locally on your device 
