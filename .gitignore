@@ -9,6 +9,9 @@ script.ps1
 # IDE files
 .vscode/
 *.code-workspace
+.idea/
+*.swp
+*.swo
 
 # Build outputs
 dist/
@@ -24,4 +27,15 @@ build/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db 
+Thumbs.db
+
+# Build and temporary files
+*.tmp
+
+# Private keys and secrets
+*.pem
+*.key
+*.cert
+
+# Configuration files with sensitive data
+config.js 
